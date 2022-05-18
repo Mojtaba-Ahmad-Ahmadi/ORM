@@ -41,7 +41,7 @@ class ComposerStaticInit8c69d3916de1ff687e6447e3bcfc9106
         ),
         'A' => 
         array (
-            'Ali\\Orm\\' => 8,
+            'App\\' => 4,
         ),
     );
 
@@ -80,7 +80,7 @@ class ComposerStaticInit8c69d3916de1ff687e6447e3bcfc9106
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-        'Ali\\Orm\\' => 
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

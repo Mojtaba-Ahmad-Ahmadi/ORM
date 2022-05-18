@@ -3,15 +3,13 @@
 namespace App\Database;
 
 use App\Contracts\DatabaseConnectionInterface;
-// require('./src/Contracts/DatabaseConnectionInterface.php');
 
 class PDoDatabaseConnection implements DatabaseConnectionInterface
 {
-
+    protected $connection;
     public function connect()
     {
         echo "kj";
-
     }
     public function getConnection()
     {

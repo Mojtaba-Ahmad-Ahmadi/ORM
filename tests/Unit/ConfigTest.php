@@ -4,11 +4,8 @@ namespace Tests\Unit;
 
 use App\Exceptions\ConfigFileNotFoundException;
 use App\Helpers\Config;
-
 use PHPUnit\Framework\TestCase;
 
-require('src/Helpers/Config.php');
-require('src/Exceptions/ConfigFileNotFoundException.php');
 class ConfigTest extends TestCase
 {
     public function testGetFileContentsReturnArray()
