@@ -14,7 +14,7 @@ class Config
             throw new ConfigFileNotFoundException();
         }
         $FileContents = require $filePath;
-        return ($FileContents);
+        return $FileContents;
     }
     public static function get(string $filename, string $key = null)
     {
