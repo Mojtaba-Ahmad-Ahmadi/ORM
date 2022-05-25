@@ -14,6 +14,7 @@ class PDOQueryBuilderTest extends TestCase
     {
         $pdoConnection = new PDODatabaseConnection($this->getConfig());
         $this->queryBuilder = new PDOQueryBuilder($pdoConnection->connect());
+        $this->queryBuilder->beginTransaction();
         parent::setUp();
     }
     public function testItCanCreateData()
@@ -29,30 +30,43 @@ class PDOQueryBuilderTest extends TestCase
         $result = $this->queryBuilder
             ->table('bugs')
             ->where('user', 'Mojtaba Ahmadi')
-            ->where('email', 'Mojtaba@gmail.com')
-            ->update(['email' => 'Ali@gmail.com', 'name' => 'Fisrt Tests of love']);
+            ->update(['email' => 'Ali@gmail.com', 'name' => 'Fisrt Tests Of Love']);
         $this->assertEquals(1, $result);
     }
-    public function testItCanDeleteRecord(){
 
+    public function testItCanUpdateWithMultipleWhere()
+    {
+        $this->insertIntoDB();
+        $this->insertIntoDB(['user' => 'Murtaza Ahmadi']);
+        $result = $this->queryBuilder
+                       ->table('bugs')
+                       ->where('user','Mojtaba Ahmadi')
+                       ->where('link','http://link.com')
+                       ->delete();
+        $this->assertEquals(1, $result);
+    }
+
+    public function testItCanDeleteRecord()
+    {
         $this->insertIntoDB();
         $this->insertIntoDB();
         $this->insertIntoDB();
         $this->insertIntoDB();
         $result = $this->queryBuilder
-            ->table('bugs')
-            ->where('user','Mojtaba')
-            ->delete();
-        $this->assertEquals(0,$result);
+                       ->table('bugs')
+                       ->where('user', 'Mojtaba')
+                       ->delete();
+        $this->assertEquals(0, $result);
     }
-    private function insertIntoDB()
+    private function insertIntoDB($option = [])
     {
-        $data = [
+        $data = array_merge([
             'name' => 'fisrt Bug Report',
             'email' => 'Mojtaba@gmail.com',
             'link' => 'http://link.com',
             'user' => 'Mojtaba Ahmadi'
-        ];
+        ], $option);
+        var_dump($data);
         $result = $this->queryBuilder->table('bugs')->create($data);
         return $result;
     }
@@ -61,9 +75,10 @@ class PDOQueryBuilderTest extends TestCase
     {
         return Config::get('database', 'pdo_testing');
     }
-    public function tearDown():void
+    public function tearDown(): void
     {
-        $this->queryBuilder->trancateAllTable();
+        // $this->queryBuilder->trancateAllTable();
+        $this->queryBuilder->rollback();
         parent::tearDown();
     }
 }
